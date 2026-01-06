@@ -1,0 +1,59 @@
+@extends('layout.app')
+
+@section('content')
+	<div class="container mb-5">
+		<div class="row">
+			<div class="col-lg-8">
+
+				@foreach ($topics as $topic)
+					@if ($topic->visible)
+						<article class="blog-post d-flex flex-column align-items-center flex-md-row gap-1 mb-4">
+							<div class="thumbnail">
+								@if (isset($topic->image_url) && $topic->image_url)
+									<img src="{{ $topic->image_url }}" alt="BG" class="bg">
+									<img src="{{ $topic->image_url }}" alt="Topic Image" class="thumb">
+								@else
+									<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="#aaaaaa" viewBox="0 0 16 16">
+										<path d="M5 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0m4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0m3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2" />
+										<path
+											d="m2.165 15.803.02-.004c1.83-.363 2.948-.842 3.468-1.105A9 9 0 0 0 8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6a10.4 10.4 0 0 1-.524 2.318l-.003.011a11 11 0 0 1-.244.637c-.079.186.074.394.273.362a22 22 0 0 0 .693-.125m.8-3.108a1 1 0 0 0-.287-.801C1.618 10.83 1 9.468 1 8c0-3.192 3.004-6 7-6s7 2.808 7 6-3.004 6-7 6a8 8 0 0 1-2.088-.272 1 1 0 0 0-.711.074c-.387.196-1.24.57-2.634.893a11 11 0 0 0 .398-2" />
+									</svg>
+								@endif
+							</div>
+							<div class="d-flex flex-column flex-grow-1 w-100 w-md-auto">
+								<h2>{{ $topic->title }}</h2>
+								<div class="blog-meta">
+									<span>{{ date('F j, Y', strtotime($topic->created_at)) }}</span>
+								</div>
+								<p>{!! $topic->excerpt !!}</p>
+								<a href="https://forum.toiletology.org/t/{{ $topic->slug }}/{{ $topic->id }}"
+									class="read-more align-self-end">Read More</a>
+							</div>
+						</article>
+					@endif
+				@endforeach
+			</div>
+
+			<div class="col-lg-4">
+				<div class="collapse d-lg-block" id="sidebarCollapse">
+					<aside class="sidebar">
+						<h4>Archives</h4>
+						@foreach ($months_by_group as $year => $months)
+							<div class="year-group">
+								<div class="year-header" data-bs-toggle="collapse" data-bs-target="#year{{ $year }}">
+									<strong>{{ $year }}</strong> <span class="float-end">▼</span>
+								</div>
+								<ul class="month-list collapse show" id="year{{ $year }}">
+									@foreach ($months as $month)
+										<li><a href="{{ url('?start_date=' . $month['first_day'] . '&end_date=' . $month['last_day']) }}"
+												class="text-decoration-none d-block">{{ $month['name'] }}</a></li>
+									@endforeach
+								</ul>
+							</div>
+						@endforeach
+					</aside>
+				</div>
+			</div>
+		</div>
+	</div>
+@endsection

@@ -1,0 +1,175 @@
+body {
+    background-color: #000000;
+}
+h1,
+h2,
+h4 {
+    color: #71ff79;
+    margin-bottom: 0.5rem;
+}
+h2,
+h4 {
+    font-size: 1.3rem;
+}
+hr {
+    border-color: #353535;
+}
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    margin: 0 auto;
+}
+.header h1 {
+    font-size: 1.5rem;
+}
+.header img {
+    max-height: 240px;
+}
+
+.blog-post {
+    color: #ffffff;
+    background: #151515;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.blog-post .thumbnail {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 200px;
+    max-width: 200px;
+    margin-right: 1rem;
+    aspect-ratio: 140/100;
+}
+.blog-post img.thumb {
+    border-radius: 8px;
+    object-fit: contain;
+    width: 100%;
+    height: 100%;
+}
+.blog-post img.bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: blur(8px);
+    border-radius: 8px;
+    z-index: -1;
+    opacity: 0.6;
+}
+.read-more {
+    color: #71ff79;
+    border: 2px solid #71ff79;
+    padding: 0.25rem 0.75rem;
+    border-radius: 6px;
+    text-decoration: none;
+    margin-top: 1rem;
+    display: inline-block;
+}
+.read-more:hover {
+    background-color: #71ff79;
+    color: #000000;
+}
+
+.blog-meta {
+    color: #afafaf;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+.sidebar {
+    background: #151515;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.sidebar h4 {
+    margin-bottom: 1.5rem;
+}
+.year-group {
+    margin-bottom: 1rem;
+}
+.year-header {
+    font-weight: 600;
+    color: #71ff79;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+.year-header:hover {
+    background-color: #ffffff11;
+}
+.month-list {
+    list-style: none;
+    padding-left: 1rem;
+    margin-top: 0.5rem;
+}
+.month-list li {
+    padding: 0.4rem 0.5rem;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+.month-list li:hover {
+    background-color: #71ff7822;
+}
+.month-list li a {
+    color: #efefef;
+}
+.month-list li:hover a {
+    color: #71ff79;
+}
+.mobile-menu-btn {
+    margin-bottom: 1rem;
+}
+@media (min-width: 992px) {
+    .mobile-menu-btn {
+        display: none;
+    }
+}
+@media (max-width: 767px) {
+    .header img {
+        max-height: 100px;
+    }
+    .blog-post .thumbnail {
+        margin-right: 0;
+        margin-bottom: 1.5rem;
+    }
+}
+.links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+    margin: 0 auto;
+    padding: 0 16px;
+    line-height: 24px;
+}
+.copy {
+    text-align: center;
+}
+.links a,
+.copy ,.copy a {
+    font-size: 16px;
+    color: white ;
+    text-decoration: none;
+}
+
+.links a:hover,
+.copy a:hover {
+    text-decoration: underline;
+    color: #71ff79;
+}
+footer {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    margin: 16px 0 0;
+}
