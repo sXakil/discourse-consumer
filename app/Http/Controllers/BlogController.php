@@ -61,7 +61,7 @@ class BlogController extends Controller {
 			$page++;
 		}
 
-		return view('blog.index', ['topics' => $topics, 'months_by_group' => $this->getMonthsByGroup(2026), 'page' => $page]);
+		return view('blog.index', ['topics' => $topics, 'months_by_group' => $this->getMonthsByGroup(2026), 'next_page' => $page > 0 ? $page : null]);
 	}
 
 	function byMonth($year, $month) {

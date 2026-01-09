@@ -29,5 +29,10 @@
 				</div>
 			</article>
 		@endforeach
+		<div class="d-flex justify-content-end">
+			@if ($next_page != null)
+				<a href="{{ url()->current() }}?page={{ $next_page }}" class="next-page align-self-end">Next Page</a>
+			@endif
+		</div>
 	@endempty
 @endsection
