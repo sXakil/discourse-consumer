@@ -106,9 +106,13 @@ hr {
 .year-header:hover {
     background-color: #ffffff11;
 }
+.year-header.collapsed .float-end {
+    transform: rotate(90deg);
+    transition: transform 0.2s;
+}
 .month-list {
     list-style: none;
-    padding-left: 1rem;
+    padding-left: 0;
     margin-top: 0.5rem;
 }
 .month-list li {
@@ -117,12 +121,14 @@ hr {
     border-radius: 4px;
     transition: background-color 0.2s;
 }
+.month-list li.active,
 .month-list li:hover {
     background-color: #71ff7822;
 }
 .month-list li a {
     color: #efefef;
 }
+.month-list li.active a,
 .month-list li:hover a {
     color: #71ff79;
 }
@@ -148,17 +154,20 @@ hr {
     flex-wrap: wrap;
     justify-content: center;
     gap: 16px;
-    margin: 0 auto;
+    margin: 0 auto 16px;
     padding: 0 16px;
     line-height: 24px;
 }
 .copy {
     text-align: center;
 }
+.copy {
+    color: #a0a0a0;
+}
 .links a,
-.copy ,.copy a {
+.copy a {
     font-size: 16px;
-    color: white ;
+    color: white;
     text-decoration: none;
 }
 

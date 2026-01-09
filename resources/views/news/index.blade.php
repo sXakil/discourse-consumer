@@ -2,7 +2,7 @@
 
 @section('content')
 	@empty($topics)
-		<p class="text-center text-white">No blog posts available.</p>
+		<p class="text-center text-white">No news posts available.</p>
 	@else
 		@foreach ($topics as $topic)
 			<article class="blog-post d-flex flex-column align-items-center flex-md-row gap-1 mb-4">

@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Cache;
 
 use Illuminate\Support\Facades\Http;
 
-class BlogController extends Controller {
+class NewsController extends Controller {
 	private function getMonthsByGroup($start_year) {
 		$months_by_group = [];
 		$current_year = date('Y');
@@ -32,11 +32,12 @@ class BlogController extends Controller {
 
 	function index(Request $request) {
 		$page = $request->get('page', 0);
-		$url = 'https://forum.toiletology.org/c/blog/23.json?page=' . $page;
+		$url = 'https://forum.toiletology.org/c/news/24.json?page=' . $page;
 		try {
+			$cache_key = 'news_topics_' . $page;
 			$cached_topics_list = Cache::remember(
-				'blog_topics_'  . $page,
-				3600,
+				$cache_key,
+				86400,
 				function () use ($url) {
 					$response = Http::withHeaders([
 						'Api-Key' => env('DISCOURSE_API_KEY'),
@@ -61,7 +62,7 @@ class BlogController extends Controller {
 			$page++;
 		}
 
-		return view('blog.index', ['topics' => $topics, 'months_by_group' => $this->getMonthsByGroup(2026), 'page' => $page]);
+		return view('news.index', ['topics' => $topics, 'months_by_group' => $this->getMonthsByGroup(2026), 'page' => $page]);
 	}
 
 	function byMonth($year, $month) {
@@ -69,9 +70,9 @@ class BlogController extends Controller {
 			$month_index = date('n', strtotime($month . ' 1 ' . $year));
 			$start_date = date('Y-m-d', mktime(0, 0, 0, $month_index, 1, $year));
 			$end_date = date('Y-m-d', mktime(0, 0, 0, $month_index + 1, 0, $year));
-			$query_params = urlencode("after:" . $start_date . " before:" . $end_date . " #blog status:open order:latest_topic");
+			$query_params = urlencode("after:" . $start_date . " before:" . $end_date . " #news status:open order:latest_topic");
 
-			$cache_key = 'blog_topics_' . $year . '_' . $month_index;
+			$cache_key = 'news_topics_' . $year . '_' . $month_index;
 
 			$cached_topics = Cache::remember(
 				$cache_key,
@@ -89,20 +90,20 @@ class BlogController extends Controller {
 		} catch (\Exception $e) {
 			$cached_topics = [];
 		}
-		return view('blog.month', ['topics' => $cached_topics, 'months_by_group' => $this->getMonthsByGroup(2026), 'selected_year' => $year, 'selected_month' => $month]);
+		return view('news.month', ['topics' => $cached_topics, 'months_by_group' => $this->getMonthsByGroup(2026), 'selected_year' => $year, 'selected_month' => $month]);
 	}
 
 	function flushCache() {
 		$page = 0;
-		while (Cache::has('blog_topics_' . $page)) {
-			Cache::forget('blog_topics_' . $page);
+		while (Cache::has('news_topics_' . $page)) {
+			Cache::forget('news_topics_' . $page);
 			$page++;
 		}
 		$months_by_group = $this->getMonthsByGroup(2026);
 		foreach ($months_by_group as $year => $months) {
 			foreach ($months as $month) {
 				$month_index = date('n', strtotime($month['name'] . ' 1 ' . $year));
-				$cache_key = 'blog_topics_' . $year . '_' . $month_index;
+				$cache_key = 'news_topics_' . $year . '_' . $month_index;
 				Cache::forget($cache_key);
 			}
 		}
