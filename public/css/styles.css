@@ -83,8 +83,13 @@ hr {
     border-radius: 6px;
     text-decoration: none;
     margin-top: 1rem;
-    display: inline-block;
+    display: flex;
+    align-items: center;
     background-color: #ffffff;
+}
+.next-page svg {
+    margin-top: 2px;
+    margin-left: 2px;
 }
 .next-page:hover {
     background-color: #efefef;
