@@ -34,7 +34,7 @@
 								<ul class="month-list collapse show" id="year{{ $year }}">
 									@foreach ($months as $month)
 										<li class="@if (isset($selected_year) && isset($selected_month) && $year == $selected_year && $month['name'] == $selected_month) active @endif">
-											<a href="{{ url($year . '/' . $month['name']) }}" class="text-decoration-none d-block">
+											<a href="{{ url()->current()}}/{{$year}}/{{$month['name']}}" class="text-decoration-none d-block">
 												{{ $month['name'] }}
 											</a>
 										</li>
