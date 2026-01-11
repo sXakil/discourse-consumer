@@ -23,7 +23,7 @@
 					<div class="blog-meta">
 						<span>{{ date('F j, Y', strtotime($topic['created_at'])) }}</span>
 					</div>
-					<p>{!! $topic['excerpt'] !!}</p>
+
 					<a href="https://forum.toiletology.org/t/{{ $topic['slug'] }}/{{ $topic['id'] }}"
 						class="read-more align-self-end">Read More</a>
 				</div>
