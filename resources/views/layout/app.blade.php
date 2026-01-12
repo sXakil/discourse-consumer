@@ -5,6 +5,9 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>The Church of Toiletology &#8211; The truth among the noise.</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&display=swap" rel="stylesheet">
 	<link href="{{ asset('bs5/bootstrap.min.css') }}" rel="stylesheet">
 	<link href="{{ asset('css/styles.css') }}" rel="stylesheet">
 </head>
@@ -17,33 +20,10 @@
 		</a>
 	</div>
 	<hr>
-	<div class="container mb-5">
-		<div class="row">
-			<div class="col-lg-8">
+	<div class="container-fluid mb-5 px-sm-5">
+		<div class="row justify-content-center">
+			<div class="col-12">
 				@yield('content')
-			</div>
-			<div class="col-lg-4">
-				<div class="collapse d-lg-block" id="sidebarCollapse">
-					<aside class="sidebar">
-						<h4>Archives</h4>
-						@foreach ($months_by_group as $year => $months)
-							<div class="year-group">
-								<div class="year-header" data-bs-toggle="collapse" data-bs-target="#year{{ $year }}">
-									<strong>{{ $year }}</strong> <span class="float-end">▼</span>
-								</div>
-								<ul class="month-list collapse show" id="year{{ $year }}">
-									@foreach ($months as $month)
-										<li class="@if (isset($selected_year) && isset($selected_month) && $year == $selected_year && $month['name'] == $selected_month) active @endif">
-											<a href="{{ url()->current()}}/{{$year}}/{{$month['name']}}" class="text-decoration-none d-block">
-												{{ $month['name'] }}
-											</a>
-										</li>
-									@endforeach
-								</ul>
-							</div>
-						@endforeach
-					</aside>
-				</div>
 			</div>
 		</div>
 	</div>

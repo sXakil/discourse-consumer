@@ -1,44 +1,88 @@
 @extends('layout.app')
 
 @section('content')
-	@empty($topics)
-		<p class="text-center text-white">No blog posts available.</p>
-	@else
-		@foreach ($topics as $topic)
-			<article class="blog-post d-flex flex-column align-items-center flex-md-row gap-1 mb-4">
-				<div class="thumbnail">
-					@if (isset($topic['image_url']) && $topic['image_url'])
-						<img src="{{ $topic['image_url'] }}" alt="BG" class="bg">
-						<img src="{{ $topic['image_url'] }}" alt="Topic Image" class="thumb">
-					@else
-						<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="#aaaaaa" viewBox="0 0 16 16">
-							<path d="M5 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0m4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0m3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2" />
-							<path
-								d="m2.165 15.803.02-.004c1.83-.363 2.948-.842 3.468-1.105A9 9 0 0 0 8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6a10.4 10.4 0 0 1-.524 2.318l-.003.011a11 11 0 0 1-.244.637c-.079.186.074.394.273.362a22 22 0 0 0 .693-.125m.8-3.108a1 1 0 0 0-.287-.801C1.618 10.83 1 9.468 1 8c0-3.192 3.004-6 7-6s7 2.808 7 6-3.004 6-7 6a8 8 0 0 1-2.088-.272 1 1 0 0 0-.711.074c-.387.196-1.24.57-2.634.893a11 11 0 0 0 .398-2" />
-						</svg>
-					@endif
-				</div>
-				<div class="d-flex flex-column flex-grow-1 w-100 w-md-auto">
-					<h2>{{ $topic['title'] }}</h2>
-					<div class="blog-meta">
-						<span>{{ date('F j, Y', strtotime($topic['created_at'])) }}</span>
-					</div>
+	<div class="d-flex flex-column mb-6 position-relative">
+		<div class="year-selector dropdown ms-auto mb-4">
+			<button type="button" class="btn btn-sm btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown"
+				aria-expanded="false">
+				Select Year ({{ $selected_year }})
+			</button>
+			<ul class="dropdown-menu dropdown-menu-end">
+				@foreach ($stats as $year => $count)
+					<li>
+						@php
+							$link = strlen($year) > 4 ? url('/') : url('/?year=' . $year);
+						@endphp
+						<a
+							class="dropdown-item @if ($count === 0) empty @endif @if ($year == $selected_year) selected @endif"
+							href="{{ $link }}">
+							{{ $year }}
+							&nbsp;
+							@unless ($count === null)
+								({{ $count }})
+							@endunless
+						</a>
+					</li>
+				@endforeach
+			</ul>
+		</div>
+		@php
+			$hasContent = false;
+		@endphp
+		@for ($i = 1; $i <= 12; $i++)
+			@php
+				$month_group = date('Y-m', mktime(0, 0, 0, $i, 10));
+			@endphp
+			@if (isset($topics[$month_group]) && count($topics[$month_group]) > 0)
+				@php
+					$hasContent = true;
+				@endphp
+				<h2 class="month-label mb-4">{{ date('F Y', strtotime($month_group . '-01')) }}</h2>
+				<div class="month-row mb-6">
+					@php
+						$m_topics = $topics[$month_group];
+					@endphp
+					@foreach ($m_topics as $topic)
+						<div class="article-card">
+							<div class="article-inner">
+								<div class="article-thumbnail">
+									<figure class="article-figure">
+										<div class="article-img-wrapper">
+											@if (isset($topic['image_url']) && $topic['image_url'])
+												<img src="{{ $topic['image_url'] }}" alt="Topic Image" class="thumb" loading="lazy">
+											@else
+												<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="#aaaaaa" viewBox="0 0 16 16">
+													<path
+														d="M5 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0m4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0m3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2" />
+													<path
+														d="m2.165 15.803.02-.004c1.83-.363 2.948-.842 3.468-1.105A9 9 0 0 0 8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6a10.4 10.4 0 0 1-.524 2.318l-.003.011a11 11 0 0 1-.244.637c-.079.186.074.394.273.362a22 22 0 0 0 .693-.125m.8-3.108a1 1 0 0 0-.287-.801C1.618 10.83 1 9.468 1 8c0-3.192 3.004-6 7-6s7 2.808 7 6-3.004 6-7 6a8 8 0 0 1-2.088-.272 1 1 0 0 0-.711.074c-.387.196-1.24.57-2.634.893a11 11 0 0 0 .398-2" />
+												</svg>
+											@endif
+										</div>
+									</figure>
+									<h3 class="article-title">{{ $topic['title'] }}</h3>
+								</div>
+								<a class="article-link" href="https://forum.toiletology.org/t/{{ $topic['slug'] }}/{{ $topic['id'] }}"
+									target="_blank">
+									<div class="article-timestamp">
+										<span class="article-date">{{ date('M j, Y', strtotime($topic['created_at'])) }}</span>
+										{{ $topic['posts_count'] - 1 }} post{{ $topic['posts_count'] - 1 != 1 ? 's' : '' }}
+									</div>
+									<div class="article-tags">
+										@foreach ($topic['tags'] as $tag)
+											#{{ $tag['name'] }}
+										@endforeach
+									</div>
+								</a>
+							</div>
 
-					<a href="https://forum.toiletology.org/t/{{ $topic['slug'] }}/{{ $topic['id'] }}"
-						class="read-more align-self-end">Read More</a>
+						</div>
+					@endforeach
 				</div>
-			</article>
-		@endforeach
-		@if ($next_page != null)
-			<div class="d-flex justify-content-end">
-				<a href="{{ url()->current() }}?page={{ $next_page }}" class="next-page align-self-end">
-					Next Page
-					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" width="16" height="16" fill="currentColor">
-						<path
-							d="M471.1 297.4C483.6 309.9 483.6 330.2 471.1 342.7L279.1 534.7C266.6 547.2 246.3 547.2 233.8 534.7C221.3 522.2 221.3 501.9 233.8 489.4L403.2 320L233.9 150.6C221.4 138.1 221.4 117.8 233.9 105.3C246.4 92.8 266.7 92.8 279.2 105.3L471.2 297.3z" />
-					</svg>
-				</a>
-			</div>
+			@endif
+		@endfor
+		@if (!$hasContent)
+			<p class="text-center text-white">No {{ $type }} posts available.</p>
 		@endif
-	@endempty
+	</div>
 @endsection

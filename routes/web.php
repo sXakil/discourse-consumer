@@ -3,14 +3,11 @@
 use App\Http\Controllers\ApiController;
 use Illuminate\Support\Facades\Route;
 
-Route::group(['prefix' => 'blog'], function () {
-    Route::get('/', [ApiController::class, 'index'])->defaults('type', 'blog');
-    Route::get('/{year}/{month}', [ApiController::class, 'byMonth'])->defaults('type', 'blog');
-    Route::get('/flush', [ApiController::class, 'flushCache'])->defaults('type', 'blog');
+Route::domain('{type}.laravel.test')->group(function () {
+    Route::get('/', [ApiController::class, 'index']);
+    Route::get('/flush', [ApiController::class, 'flushCache']);
 });
 
-Route::group(['prefix' => 'news'], function () {
-    Route::get('/', [ApiController::class, 'index'])->defaults('type', 'news');
-    Route::get('/{year}/{month}', [ApiController::class, 'byMonth'])->defaults('type', 'news');
-    Route::get('/flush', [ApiController::class, 'flushCache'])->defaults('type', 'news');
+Route::get('*', function () {
+    return response('Not Found', 404);
 });
