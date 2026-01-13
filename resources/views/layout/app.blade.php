@@ -43,9 +43,20 @@
 		<hr>
 		<div class="links">
 			<a href="https://forum.toiletology.org">Forum</a>
-			<a href="https://news.toiletology.org">News</a>
-			<a href="https://radio.toiletology.org">Radio</a>
-			<a href="https://lessons.toiletology.org">Lessons</a>
+			@isset($type)
+				@if ($type != 'blog')
+					<a href="https://blog.toiletology.org">Blog</a>
+				@endif
+				@if ($type != 'news')
+					<a href="https://news.toiletology.org">News</a>
+				@endif
+				@if ($type != 'radio')
+					<a href="https://radio.toiletology.org">Radio</a>
+				@endif
+				@if ($type != 'lessons')
+					<a href="https://lessons.toiletology.org">Lessons</a>
+				@endif
+			@endisset
 			<a href="https://anti.biz/toiletology">Store</a>
 			<a href="https://toiletology.org/donate">Donate</a>
 			<a href="https://anti.biz/goosexxx">Promote</a>
