@@ -37,7 +37,7 @@
 				@php
 					$hasContent = true;
 				@endphp
-				<h2 class="month-label mx-4 mb-4">{{ date('F Y', strtotime($month_group . '-01')) }}</h2>
+				<h2 class="month-label mx-4 mb-5">{{ date('F Y', strtotime($month_group . '-01')) }}</h2>
 				<div class="month-row">
 					@php
 						$m_topics = $topics[$month_group];
