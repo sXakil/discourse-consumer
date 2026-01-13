@@ -27,8 +27,8 @@ body {
 }
 .year-selector {
     position: absolute;
-    top: 0;
-    right: 0;
+    top: 4px;
+    right: 24px;
 }
 .year-selector .dropdown-item {
     font-family: var(--font-family);
@@ -95,10 +95,9 @@ hr {
 .month-label {
     font-size: 1.2rem;
     font-weight: 700;
-    line-height: 32px;
+    line-height: 24px;
     font-family: var(--font-family);
     width: 100%;
-    margin-bottom: 20px;
 }
 .month-row {
     width: 100%;
