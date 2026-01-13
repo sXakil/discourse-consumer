@@ -20,18 +20,16 @@
 		</a>
 	</div>
 	<hr>
-	<div class="container-fluid mb-5 px-sm-5">
-		<div class="row justify-content-center">
-			<div class="col-12">
-				@yield('content')
-			</div>
-		</div>
+	<div class="main-container">
+		@yield('content')
 	</div>
 	<footer>
 		<hr>
 		<div class="links">
 			<a href="https://forum.toiletology.org">Forum</a>
 			<a href="https://news.toiletology.org">News</a>
+			<a href="https://radio.toiletology.org">Radio</a>
+			<a href="https://lessons.toiletology.org">Lessons</a>
 			<a href="https://anti.biz/toiletology">Store</a>
 			<a href="https://toiletology.org/donate">Donate</a>
 			<a href="https://anti.biz/goosexxx">Promote</a>
@@ -45,6 +43,9 @@
 		</p>
 	</footer>
 	<script src="{{ asset('bs5/bootstrap.bundle.min.js') }}"></script>
+	<script src="{{ asset('js/imagesloaded.pkgd.min.js') }}"></script>
+	<script src="{{ asset('js/masonry.pkgd.min.js') }}"></script>
+	@yield('scripts')
 </body>
 
 </html>
